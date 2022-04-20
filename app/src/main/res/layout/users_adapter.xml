@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spaceAll"
+    android:background="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/back_courses"
+    app:cardCornerRadius="15dp"
+    app:contentPadding="@dimen/spaceAll"
+    app:strokeColor="@color/colorPrimary"
+    app:strokeWidth="0.5dp"
+    android:id="@+id/cvUserLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvCardImage"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="10dp"
+            app:strokeColor="@color/lightMediumGray"
+            app:strokeWidth="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvUserName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivUserImage"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spaceAll"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_semibold"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSizeLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/cvCardImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spaceAll"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSizeMedium"
+            app:layout_constraintBottom_toTopOf="@+id/tvUserPhone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cvCardImage"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvUserPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSizeMedium"
+            app:layout_constraintBottom_toTopOf="@+id/tvUserGender"
+            app:layout_constraintStart_toEndOf="@+id/cvCardImage"
+            app:layout_constraintStart_toStartOf="@+id/tvUserEmail"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserEmail" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvUserGender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="@font/poppins_regular"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSizeMedium"
+            app:layout_constraintStart_toEndOf="@+id/cvCardImage"
+            app:layout_constraintStart_toStartOf="@+id/tvUserPhone"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserPhone"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingTop="@dimen/spaceAll"
+            android:paddingBottom="@dimen/spaceAll"
+            app:layout_constraintBaseline_toTopOf="@id/clRandomText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="@dimen/spaceAll"
+                android:text="@string/no_of_random_nusers_showing"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvCustomText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvCustomText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:alpha="0.7"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="@dimen/spaceAll"
+                android:text="@string/enter_custom_users"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/etSearchText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@color/white"
+                android:hint="@string/enter_user_name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minLines="1"
+                android:padding="@dimen/spaceAll"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="Enter User Name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spaceAll"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="@dimen/spaceAll"
+                android:text="@string/search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etSearchText"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRandomText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/rgGender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clTop">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="@dimen/spaceAll"
+                android:text="@string/random_users_list"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeLarge"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tvUsersCount"
+                app:layout_constraintEnd_toStartOf="@+id/tvUsersCount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvUsersCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="@dimen/spaceAll"
+                android:text=""
+                android:textAlignment="textEnd"
+                android:textColor="#455A64"
+                android:textSize="@dimen/textSizeLarge"
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toBottomOf="parent"
+                tools:text="Users : 300" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RadioGroup
+            android:id="@+id/rgGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spaceAll"
+            android:layout_marginTop="@dimen/spaceAll"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="@dimen/spaceAll"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivRemoveFilter"
+            app:layout_constraintTop_toBottomOf="@+id/clRandomText">
+
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:padding="@dimen/spaceAll"
+                android:tag="male"
+                android:text="@string/male"
+                android:textColor="@drawable/radio_flat_text_selector" />
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:padding="@dimen/spaceAll"
+                android:tag="female"
+                android:text="@string/female"
+                android:textColor="@drawable/radio_flat_text_selector" />
+
+
+        </RadioGroup>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivRemoveFilter"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:background="?attr/selectableItemBackground"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/rgGender"
+            app:layout_constraintTop_toBottomOf="@+id/clRandomText"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/ic_remove_filter" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvUsersList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spaceAll"
+            android:background="@color/white"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgGender"
+            tools:listitem="@layout/users_adapter" />
+
+        <TextView
+            android:id="@+id/tvNoDataFound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="244dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
+            android:padding="@dimen/spaceAll"
+            android:text="@string/no_search_data_found"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSizeLarge"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgGender" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/viewBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bottomSheetCustomNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4.0dp"
+                android:background="@color/colorPrimary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5.0dp"
+                android:background="@color/lightMediumGray" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spaceAll"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/enter_the_custom_numbers_here"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.0dp"
+                android:background="@color/lightMediumGray" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spaceAll"
+                android:hint="@string/enter_number"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="@dimen/textSizeLarge"
+                app:boxStrokeColor="@color/colorPrimary"
+                app:boxStrokeWidth="1dp"
+                app:hintTextColor="@android:color/darker_gray"
+                app:placeholderTextAppearance="@dimen/textSizeMedium">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:minLines="1"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeMedium" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spaceAll"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="10dp"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeMedium"
+                app:strokeWidth="1.0dp"
+                app:strokeColor="@android:color/darker_gray"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tvNoInternet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:background="@android:color/darker_gray"
+        android:fontFamily="@font/poppins_semibold"
+        android:padding="@dimen/spaceAll"
+        android:text="@string/no_internet_connection_available"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeLarge"
+        app:layout_anchor="@+id/constraintLayout"
+        app:layout_anchorGravity="top|center"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

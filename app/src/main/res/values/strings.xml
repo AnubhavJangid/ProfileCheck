@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ProfileCheck</string>
+    <string name="random_users_list">Random Users List</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="no_of_random_nusers_showing">No of Random \nUsers showing</string>
+    <string name="search">Search</string>
+    <string name="enter_user_name">Enter User Name</string>
+    <string name="user_details">User Details</string>
+    <string name="enter_custom_users"><![CDATA[Enter Custom Users ->]]></string>
+    <string name="no_search_data_found">No Search Data Found</string>
+    <string name="submit">Submit</string>
+    <string name="enter_number">Enter Number :</string>
+    <string name="enter_the_custom_numbers_here">Enter the Custom\nNumbers here :</string>
+    <string name="users">Users</string>
+    <string name="no_internet_connection_available">No Internet Connection Available</string>
+    <string name="internet_connection_available">Internet Connection Available</string>
+</resources>
