@@ -5,18 +5,14 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.media.profilecheck.adapter.UserAdapter
-import com.media.profilecheck.api.RetrofitHelper
 import com.media.profilecheck.databinding.ActivityMainBinding
 import com.media.profilecheck.models.UsersResult
-import com.media.profilecheck.repository.MainRepository
 import com.media.profilecheck.repository.NetworkResult
 import com.media.profilecheck.repository.UserData
 import com.media.profilecheck.room.UserDatabase
@@ -26,12 +22,16 @@ import com.media.profilecheck.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var mainRepository: MainRepository
+    lateinit var viewModel: MainViewModel
+
+    @Inject
+    lateinit var mainViewModelFactory: MainViewModelFactory
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private lateinit var connectionData: InternetConnection
@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        (application as UserApplication).applicationComponent.inject(this)
         bindUiViews()
     }
 
@@ -55,9 +57,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         connectionData = InternetConnection(this)
         userDatabase = UserDatabase.getDbInstance(this)
-        mainRepository = MainRepository(RetrofitHelper.apiService)
-        val factory = MainViewModelFactory(mainRepository)
-        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+
+        viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
 
         binding.progressBar.visibility = View.VISIBLE
         val bottomSheet = binding.bottomSheetCustomNumber
@@ -162,8 +163,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     //Handle Search Close Button
     private fun handleSearchCloseButton() {
-        val clearButton: ImageView =
-            binding.etSearchText.findViewById(androidx.appcompat.R.id.search_close_btn)
+        val clearButton: ImageView = binding.etSearchText.findViewById(androidx.appcompat.R.id.search_close_btn)
 
         clearButton.setOnClickListener {
             if (binding.etSearchText.query.isEmpty()) {
@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     //Handles the internet connection in realtime
     private fun handleInternetConnection() {
-        CoroutineScope(Dispatchers.IO).launch {
+        /*CoroutineScope(Dispatchers.IO).launch {
             connectionData.observe(lifecycle as LifecycleOwner) {
                 if (it == false) {
                     getDataRoomDb()
@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
 
-        }
+        }*/
 
     }
 
