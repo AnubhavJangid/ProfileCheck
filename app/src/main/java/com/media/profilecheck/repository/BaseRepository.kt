@@ -1,13 +1,14 @@
 package com.media.profilecheck.repository
 
 import android.util.Log
+import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 
 
-abstract class BaseRepository {
+open class BaseRepository {
 
     suspend fun<T> safeApiCall(
         apiCall : suspend () -> T
