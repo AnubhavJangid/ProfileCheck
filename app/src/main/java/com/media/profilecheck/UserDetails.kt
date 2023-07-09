@@ -2,6 +2,8 @@ package com.media.profilecheck
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
+import com.media.profilecheck.api.ApiParam
 import com.media.profilecheck.api.ApiParam.USER_DATA
 import com.media.profilecheck.databinding.UserDetailsBinding
 import com.media.profilecheck.models.UserResponse
@@ -28,15 +30,15 @@ class UserDetails : AppCompatActivity() {
         }
 
         userResult.let {
-            userResult = intent.getParcelableExtra(USER_DATA)
+            val gson = Gson()
+            userResult = gson.fromJson(intent.getStringExtra(USER_DATA), UsersResult::class.java)
         }
 
         binding.ivDetailsImage.loadImage(userResult?.picture?.large)
-        binding.tvDetailsName.text = "${userResult?.name?.title} ${userResult?.name?.first} ${userResult?.name?.last}"
+        binding.tvDetailsName.text = "${userResult?.name?.first} ${userResult?.name?.last}"
         binding.tvDetailsEmail.text = userResult?.email
         binding.tvGender.text = userResult?.gender?.substring(0, 1)?.uppercase(Locale.ROOT) + userResult?.gender?.substring(1)?.lowercase()
         binding.tvPhoneNumber.text = userResult?.phone
-        binding.tvDob.text = userResult?.dob?.date?.substring(0,10)
 
     }
 

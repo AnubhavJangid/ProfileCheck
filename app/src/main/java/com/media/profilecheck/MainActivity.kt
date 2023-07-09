@@ -1,20 +1,19 @@
 package com.media.profilecheck
 
 import android.os.Bundle
+import android.service.autofill.UserData
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.media.profilecheck.adapter.UserAdapter
 import com.media.profilecheck.databinding.ActivityMainBinding
 import com.media.profilecheck.models.UsersResult
 import com.media.profilecheck.repository.NetworkResult
-import com.media.profilecheck.repository.UserData
 import com.media.profilecheck.room.UserDatabase
 import com.media.profilecheck.utils.InternetConnection
 import com.media.profilecheck.viewmodel.MainViewModel
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private lateinit var connectionData: InternetConnection
-    private lateinit var userDatabase: UserDatabase
 
     private val userAdapter by lazy {
         UserAdapter()
@@ -56,7 +54,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun bindUiViews() {
 
         connectionData = InternetConnection(this)
-        userDatabase = UserDatabase.getDbInstance(this)
 
         viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
 
@@ -116,7 +113,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     binding.progressBar.visibility = View.GONE
                     binding.tvUsersCount.text = resources.getString(R.string.users) + ": ${it.data.results?.size}"
                     it.data.results?.let { it1 -> rendersData(it1) }
-                    it.data.results?.let { it1 -> saveData(it1) }
                 }
                 is NetworkResult.Failure -> {
                     binding.progressBar.visibility = View.GONE
@@ -217,27 +213,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }*/
-
-    }
-
-    private fun saveData(userList: List<UsersResult>) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val userData = UserData(userList)
-            userDatabase.userDao.insertData(userData)
-        }
-
-    }
-
-    private fun getDataRoomDb() {
-
-        userDatabase.userDao.getUserData().observe(this) {
-            Log.e("Data", ""+it.size)
-            //binding.tvUsersCount.text = resources.getString(R.string.users) + ": ${it.size}"
-            //it.forEach {
-            //    it.results?.let { it1 -> rendersData(it1) }
-            //}
-        }
 
     }
 

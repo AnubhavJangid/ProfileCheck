@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.media.profilecheck.UserDetails
 import com.media.profilecheck.api.ApiParam
 import com.media.profilecheck.databinding.UsersAdapterBinding
@@ -46,14 +48,15 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         fun bind(userData: UsersResult) {
             with(userData)
             {
-                view.tvUserName.text = "${name?.title} ${name?.first} ${name?.last}"
+                view.tvUserName.text = "${name?.first} ${name?.last}"
                 view.tvUserEmail.text = email
                 view.tvUserGender.text = gender
                 view.tvUserPhone.text = phone
                 view.ivUserImage.loadImage(picture?.large)
                 view.cvUserLayout.setOnClickListener {
                     val intent = Intent(context, UserDetails::class.java)
-                    intent.putExtra(ApiParam.USER_DATA, userData)
+                    val gson = Gson()
+                    intent.putExtra(ApiParam.USER_DATA, gson.toJson(userData))
                     context.startActivity(intent)
                 }
             }
