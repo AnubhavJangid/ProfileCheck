@@ -1,15 +1,12 @@
 package com.media.profilecheck
 
 import android.app.Application
-import com.media.profilecheck.di.ApplicationComponent
-import com.media.profilecheck.di.DaggerApplicationComponent
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class UserApplication : Application() {
-
-    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
-        applicationComponent = DaggerApplicationComponent.factory().create(this)
     }
 }
