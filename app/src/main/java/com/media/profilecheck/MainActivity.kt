@@ -1,6 +1,7 @@
 package com.media.profilecheck
 
 import android.os.Bundle
+import android.service.autofill.UserData
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -14,7 +15,6 @@ import com.media.profilecheck.adapter.UserAdapter
 import com.media.profilecheck.databinding.ActivityMainBinding
 import com.media.profilecheck.models.UsersResult
 import com.media.profilecheck.repository.NetworkResult
-import com.media.profilecheck.repository.UserData
 import com.media.profilecheck.room.UserDatabase
 import com.media.profilecheck.utils.InternetConnection
 import com.media.profilecheck.viewmodel.MainViewModel
@@ -32,10 +32,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var mainViewModelFactory: MainViewModelFactory
 
+    @Inject
+    lateinit var userDatabase: UserDatabase
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private lateinit var connectionData: InternetConnection
-    private lateinit var userDatabase: UserDatabase
 
     private val userAdapter by lazy {
         UserAdapter()
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         (application as UserApplication).applicationComponent.inject(this)
+
+        val map = (application as UserApplication).applicationComponent.getMap()
         bindUiViews()
     }
 
@@ -56,7 +60,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun bindUiViews() {
 
         connectionData = InternetConnection(this)
-        userDatabase = UserDatabase.getDbInstance(this)
 
         viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
 
@@ -116,7 +119,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     binding.progressBar.visibility = View.GONE
                     binding.tvUsersCount.text = resources.getString(R.string.users) + ": ${it.data.results?.size}"
                     it.data.results?.let { it1 -> rendersData(it1) }
-                    it.data.results?.let { it1 -> saveData(it1) }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        it.data.results?.let { it1 -> userDatabase.getUserDao.insertData(it1) }
+                    }
                 }
                 is NetworkResult.Failure -> {
                     binding.progressBar.visibility = View.GONE
@@ -209,7 +214,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         /*CoroutineScope(Dispatchers.IO).launch {
             connectionData.observe(lifecycle as LifecycleOwner) {
                 if (it == false) {
-                    getDataRoomDb()
                     binding.tvNoInternet.visibility = View.VISIBLE
                 } else {
                     binding.tvNoInternet.visibility = View.GONE
@@ -217,27 +221,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }*/
-
-    }
-
-    private fun saveData(userList: List<UsersResult>) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val userData = UserData(userList)
-            userDatabase.userDao.insertData(userData)
-        }
-
-    }
-
-    private fun getDataRoomDb() {
-
-        userDatabase.userDao.getUserData().observe(this) {
-            Log.e("Data", ""+it.size)
-            //binding.tvUsersCount.text = resources.getString(R.string.users) + ": ${it.size}"
-            //it.forEach {
-            //    it.results?.let { it1 -> rendersData(it1) }
-            //}
-        }
 
     }
 
