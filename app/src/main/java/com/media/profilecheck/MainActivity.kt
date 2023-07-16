@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.media.profilecheck.adapter.UserAdapter
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var mainViewModelFactory: MainViewModelFactory
 
+    @Inject
+    lateinit var userDatabase: UserDatabase
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var mBottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private lateinit var connectionData: InternetConnection
@@ -47,6 +51,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         (application as UserApplication).applicationComponent.inject(this)
+
+        val map = (application as UserApplication).applicationComponent.getMap()
         bindUiViews()
     }
 
@@ -113,6 +119,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     binding.progressBar.visibility = View.GONE
                     binding.tvUsersCount.text = resources.getString(R.string.users) + ": ${it.data.results?.size}"
                     it.data.results?.let { it1 -> rendersData(it1) }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        it.data.results?.let { it1 -> userDatabase.getUserDao.insertData(it1) }
+                    }
                 }
                 is NetworkResult.Failure -> {
                     binding.progressBar.visibility = View.GONE
@@ -205,7 +214,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         /*CoroutineScope(Dispatchers.IO).launch {
             connectionData.observe(lifecycle as LifecycleOwner) {
                 if (it == false) {
-                    getDataRoomDb()
                     binding.tvNoInternet.visibility = View.VISIBLE
                 } else {
                     binding.tvNoInternet.visibility = View.GONE
