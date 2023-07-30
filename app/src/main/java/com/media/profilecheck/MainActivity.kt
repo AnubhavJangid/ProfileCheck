@@ -18,19 +18,16 @@ import com.media.profilecheck.repository.NetworkResult
 import com.media.profilecheck.room.UserDatabase
 import com.media.profilecheck.utils.InternetConnection
 import com.media.profilecheck.viewmodel.MainViewModel
-import com.media.profilecheck.viewmodel.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var viewModel: MainViewModel
-
-    @Inject
-    lateinit var mainViewModelFactory: MainViewModelFactory
 
     @Inject
     lateinit var userDatabase: UserDatabase
@@ -50,9 +47,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        (application as UserApplication).applicationComponent.inject(this)
-
-        val map = (application as UserApplication).applicationComponent.getMap()
         bindUiViews()
     }
 
@@ -61,7 +55,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         connectionData = InternetConnection(this)
 
-        viewModel = ViewModelProvider(this, mainViewModelFactory)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         binding.progressBar.visibility = View.VISIBLE
         val bottomSheet = binding.bottomSheetCustomNumber
